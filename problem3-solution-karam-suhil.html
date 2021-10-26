@@ -1,0 +1,83 @@
+<html>
+  <body>
+    <h2>Fridge Items</h2>
+    <table>
+      <thead>
+        <td>
+          <b>Item</b>
+        </td>
+        <td>
+          <b>Count</b>
+        </td>
+        <td>
+          <b>Remove</b>
+        </td>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="key"></td>
+          <td id="value"></td>
+          <td id="btn"> </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <br />
+    <input name="searchTxt" type="text" maxlength="512" id="searchTxt" class="searchField"/>
+    <button onClick="add(event)">Add</button>
+  </body>
+  <script>
+
+    var input = document.getElementById("searchTxt");
+    var obj = {};
+
+    function add(event){
+    const myArr = input.value.split(" ");
+    obj[myArr[0].toString()] = myArr[1];
+    document.getElementById("searchTxt").value=""
+    var key_str = "",value_str="", btn="";
+
+    for (const [key, value] of Object.entries(obj)) {
+        key_str += "<p>" + key + "</p>";
+        value_str += "<p>" + value + "</p>";
+        btn +=  '<p><button onClick=remove('+'"'+key+'"'+')> X </button></p>';
+    }
+    refresh(key_str,value_str,btn);
+    }
+
+    function remove(val) {
+        var name = val.toString();
+        delete obj[name];
+        var key_str = "",value_str="", btn="";
+        for (const [key, value] of Object.entries(obj)) {
+        key_str += "<p>" + key + "</p>";
+        value_str += "<p>" + value + "</p>";
+        btn +=  '<p><button onClick=remove('+'"'+key+'"'+')> X </button></p>';
+        }
+        refresh(key_str,value_str,btn);
+    }
+  
+
+
+
+function refresh(key_str,value_str,btn){
+    document.getElementById("key").innerHTML = key_str;
+    document.getElementById("value").innerHTML = value_str;
+    document.getElementById("btn").innerHTML = btn;
+}
+
+Object.size = function(obj) {
+  var size = 0,
+    key;
+  for (key in obj) {
+    if (obj.hasOwnProperty(key)) size++;
+  }
+  return size;
+};
+  </script>
+  <style>
+    td {
+      padding-right: 50px;
+    }
+  </style>
+</html>
